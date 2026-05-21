@@ -1,2 +1,4 @@
 # ignore packages installed in virtual env
 venv/
+
+__pycache__
