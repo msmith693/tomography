@@ -64,6 +64,9 @@ A secondary goal for this project was to develop a simple neural network that co
 
 # My investigation
 
+# What I have learned
+Reconstructing sparse sinograms is HARD.
+
 ## Refererences
 <p id="ref1">
   [1] V. P. Gopi and P. Palanisamy,
