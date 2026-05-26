@@ -1,13 +1,33 @@
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.constants import golden_ratio
-from skimage.transform import radon
+from skimage.metrics import structural_similarity as ssim
+from skimage.transform import iradon_sart, radon
 from skimage.transform.radon_transform import sart_projection_update
 from skimage.restoration import denoise_tv_chambolle
 from skimage.data import shepp_logan_phantom
 from skimage import io
 from matplotlib import pyplot as plt
 from warnings import warn
+from numpy import random
+
+
+def calculate_mse(original_image, reconstructed_image):
+    """
+    Returns Mean Squared Error for an image.
+    """
+    return np.mean((original_image - reconstructed_image) ** 2)
+
+
+def calculate_ssim(original_image, reconstructed_image):
+    """
+    Wrapper function to return SSIM (Structural Similarity Index Measure) value for an image
+    """
+    return ssim(
+        original_image,
+        reconstructed_image,
+        data_range=original_image.max() - original_image.min(),
+    )  # NOTE: Does data range vary between original and reconstrcted images?
 
 
 def generate_num_projections(int):
@@ -18,6 +38,70 @@ def generate_sparse_sinogram(image, int):
     return radon(image, theta=generate_num_projections(int))
 
 
+def add_salt_pepper(image, prob):
+    """
+    Adds salt and pepper noise to image, with probability of pixel being affected equal to prob.
+
+    This changes random pixel value to 255 and 0 for salt and pepper noise repsectively.
+
+    Typical values for probability parameter are around 0.05.
+
+    Leaves original image unmodified.
+    """
+    copy = image.copy()
+    rand_array = np.random.rand(image.shape[0], image.shape[1])
+    max_intensity = 1
+    min_intensity = 0
+
+    # set salt and pepper to max and min intensity vals of image as absolute maximum intensity vals (0, 1) look very unnatural
+    copy[rand_array < prob] = min_intensity
+    copy[rand_array > (1 - prob)] = max_intensity
+
+    return copy
+
+
+def add_gaussian_noise(image, mu=0.0, sigma=0.1):
+    """
+    Adds Gaussian noise to image, with mu and sigma.
+
+    Modifying mu will shift the noise to more high or low intensity noise.
+
+    Modifying sigma affects amount of intensity variation in noise.
+    """
+    copy = image.copy()
+    gaussian_noise_array = np.random.normal(
+        mu, sigma, size=(image.shape[0], image.shape[1])
+    )
+    copy += gaussian_noise_array
+
+    return copy
+
+
+def iterative_sart(
+    radon_image,
+    iterations,
+    theta=None,
+    image=None,
+    projection_shifts=None,
+    clip=None,
+    relaxation=0.15,
+    dtype=None,
+):
+
+    for iteration in range(iterations):
+        image = iradon_sart(
+            radon_image,
+            theta,
+            image,
+            projection_shifts,
+            clip,
+            relaxation,
+            dtype,
+        )
+    return image
+
+
+# Function copied direct from scikit image library.
 def order_angles_golden_ratio(theta):
     """Order angles to reduce the amount of correlated information in
     subsequent projections.
@@ -80,6 +164,7 @@ def order_angles_golden_ratio(theta):
 
 def modified_sart_plus_tv(
     radon_image,
+    iterations,
     theta=None,
     image=None,
     weight=0.1,
@@ -149,15 +234,17 @@ def modified_sart_plus_tv(
         clip = np.asarray(clip, dtype=dtype)
 
     # This is what matters. For each (reordered) angle, do:
-    for angle_index in order_angles_golden_ratio(theta):
-        image_update = sart_projection_update(
-            image,
-            theta[angle_index],
-            radon_image[:, angle_index],
-            projection_shifts[angle_index],
-        )
-        # TV applied on the image after each correction update.
-        image += denoise_tv_chambolle((relaxation * image_update), weight=weight)
-        if clip is not None:
-            image = np.clip(image, clip[0], clip[1])
+    for iteration in range(iterations):
+        for angle_index in order_angles_golden_ratio(theta):
+            image_update = sart_projection_update(
+                image,
+                theta[angle_index],
+                radon_image[:, angle_index],
+                projection_shifts[angle_index],
+            )
+            # TV applied on the image after each correction update.
+            image += relaxation * image_update
+            if clip is not None:
+                image = np.clip(image, clip[0], clip[1])
+        image = denoise_tv_chambolle(image, weight=weight)
     return image
