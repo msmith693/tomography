@@ -1,5 +1,11 @@
 # Tomography
 
+<p float="left">
+  <img src="results/original_cells.gif" width="31%"/>
+  <img src="results/reconstructed-cells-50-proj-10-iter.gif" width="31%"/>
+  <img src="results/reconstructed-cells-25-proj-15-iter.gif" width="31%"/>
+</p>
+
 ## Background
 This is a project I have been working on to investigate the field of Computer Tomography, specifically Sparse View Tomography (SVT), which is an ongoing problem in many fields of research including radiology, archaeology and materials science. This repo contains information I have gathered on the field, such as the use of CT, algorithms used to solve the problems created by SVT and my own analysis and development of these algorithms.
 
