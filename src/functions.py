@@ -4,12 +4,28 @@ from scipy.constants import golden_ratio
 from skimage.metrics import structural_similarity as ssim
 from skimage.transform import iradon_sart, radon
 from skimage.transform.radon_transform import sart_projection_update
-from skimage.restoration import denoise_tv_chambolle
+from skimage.restoration import denoise_tv_chambolle, denoise_tv_bregman
 from skimage.data import shepp_logan_phantom
 from skimage import io
 from matplotlib import pyplot as plt
 from warnings import warn
 from numpy import random
+
+
+def pad_image_square(image, pad_width):
+    """
+    Simple padding function to add border around image before a sinogram is generated.
+
+    This is done so that when the image is reconstructed, the reconstructed image is not cropped of its original details by the circular artefact that appears as a result of the projections.
+
+    Needs to be removed after reconstruction using indexing.
+    """
+    return np.pad(
+        image,
+        ((pad_width, pad_width), (pad_width, pad_width)),
+        mode="constant",
+        constant_values=image.mean(),
+    )
 
 
 def calculate_mse(original_image, reconstructed_image):
