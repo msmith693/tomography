@@ -4,7 +4,7 @@
   <img src="results/original_cells.gif" width="31%"/>
   <img src="results/reconstructed-cells-50-proj-10-iter.gif" width="31%"/>
   <img src="results/reconstructed-cells-25-proj-15-iter.gif" width="31%"/>
-  Original 3D cell volume, reconstructed volume from 50 projections, reconstructed volume from 25 projections from left to right.
+  <em>Original 3D cell volume, reconstructed volume from 50 projections, reconstructed volume from 25 projections from left to right. More details in <a href='https://github.com/msmith693/tomography#results'>results</a>.<em>
 </p>
 
 ## Background
@@ -17,7 +17,7 @@ It is extensively used in medical imaging, where it is often necessary to see 'i
 
 <table>
 <tr>
-<td align="center" width="40%">
+<td align="center" width="44%">
 
 <figure>
     <img src="images/CT_of_a_normal_brain.png" width="100%">
@@ -28,7 +28,7 @@ It is extensively used in medical imaging, where it is often necessary to see 'i
 
 </td>
 
-<td align="center" width="60%">
+<td align="center" width="55%">
 
 <figure>
     <img src="images/Tomographic_fig1.png" width="100%">
@@ -46,7 +46,7 @@ It is extensively used in medical imaging, where it is often necessary to see 'i
 </tr>
 </table>
 
-The intensity angles for each projection are calculated and combined to form a sinogram. Mulitple algorithms exist to reconstruct the 2D image from the sinogram. They mainly fall into two main categories.
+The intensity angles for each projection are calculated and combined to form a sinogram. Mulitple algorithms exist to reconstruct the 2D image from the sinogram. They fall into two main categories.
 
 ### Filtered Back Projection (FBP)
 
@@ -81,22 +81,24 @@ For the real cell data, the process was the same, without additional noise added
 This was modelled as closely to a real tomographic pipeline as possible, where limitations in projection angles can arise from physical experimental setup, sensitivity of the tissue to scanning, or the need for simultaneous imaging of a fast moving object.
 
 ## Results
-<p float="left">
-  <img src="results/original_cells.gif" width="31%"/>
-  <img src="results/reconstructed-cells-50-proj-10-iter.gif" width="31%"/>
-  <img src="results/reconstructed-cells-25-proj-15-iter.gif" width="31%"/>
-  <li>Original 3D cell volume, reconstructed volume from 50 projections, reconstructed volume from 25 projections from left to right.</li>
+<p align='center'>
+  <img src="results/original_cells.gif" width="50%"/>  
+</p>
+<p align='center'>
+<img src="results/reconstructed-cells-50-proj-10-iter.gif" width="49%"/>
+  <img src="results/reconstructed-cells-25-proj-15-iter.gif" width="49%"/>
+  <em>Original 3D cell volume on top, reconstructed volume from 50 projections bottom left, reconstructed volume from 25 projections bottom right.</em>
 
   <li>There is a definite loss in quality, but the overall result shows the effectiveness of a modified SART iterative algorithm combined with a Total Variation (TV) denoising filter.</li>
 
   <li>The images were further filtered by modifying the gamma and max and min contrast values.</li>
 
-  <li>The artefacts on the corners of the reonstructed image are discussed further in the section on [image artefacts](#image-artefacts)</li>
+  <li>The artefacts on the corners of the reonstructed image are discussed further in the section on <a href="https://github.com/msmith693/tomography#image-artefacts">image artefacts</a>.</li>
 </p>
 
 <p float="left">
   <img src="results/multiple-iterations-reconstruction-errors.png" width="100%"/>
-  <li>Modified TV+SART algorithm produces mixed results depending on the image that was reconstructed. While having a higher SSIM score for both the unmodified Shepp-Logan phantom and cell data, the algorithm performs worse than the unmodified SART algorithm from Scikit Image library.</li>
+  <em>Modified TV+SART algorithm produces mixed results depending on the image that was reconstructed. While having a higher SSIM score for both the unmodified Shepp-Logan phantom and cell data, the algorithm performs worse than the unmodified SART algorithm from Scikit Image library.</em>
 
   <li>FBP outperforms both iterative algorithms as projection number increases for the noisier data. It is very poor for extremely limited angle reconstruction.</li>
 </p>
@@ -107,7 +109,7 @@ This was modelled as closely to a real tomographic pipeline as possible, where l
 <p float="center">
   <img src="results/SART+TV-varying-projection-angles.png" width="100%"/>
   
-  <li>Visualisation of modified SART with additional TV denoising on Shepp-Logan phantom for varying projection angles. Artefacts from individual projection angles are clearly seen.</li>
+  <em>Visualisation of modified SART with additional TV denoising on Shepp-Logan phantom for varying projection angles. Artefacts from individual projection angles are clearly seen.</em>
 </p>
 
 
