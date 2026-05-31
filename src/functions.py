@@ -180,7 +180,7 @@ def order_angles_golden_ratio(theta):
 
 def modified_sart_plus_tv(
     radon_image,
-    iterations,
+    iterations=1,
     theta=None,
     image=None,
     weight=0.1,
