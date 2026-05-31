@@ -4,7 +4,7 @@
   <img src="results/original_cells.gif" width="31%"/>
   <img src="results/reconstructed-cells-50-proj-10-iter.gif" width="31%"/>
   <img src="results/reconstructed-cells-25-proj-15-iter.gif" width="31%"/>
-  <em>Original 3D cell volume, reconstructed volume from 50 projections, reconstructed volume from 25 projections from left to right. More details in <a href='https://github.com/msmith693/tomography#results'>results</a>.<em>
+  <em>Original 3D cell volume, reconstructed volume from 50 projections, reconstructed volume from 25 projections from left to right. More details in <a href='https://github.com/msmith693/tomography#results'>results</a>.</em>
 </p>
 
 ## Background
