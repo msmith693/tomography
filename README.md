@@ -98,7 +98,7 @@ This was modelled as closely to a real tomographic pipeline as possible, where l
 
 <p float="left">
   <img src="results/multiple-iterations-reconstruction-errors.png" width="100%"/>
-  <em>Modified TV+SART algorithm produces mixed results depending on the image that was reconstructed. While having a higher SSIM score for both the unmodified Shepp-Logan phantom and cell data, the algorithm performs worse than the unmodified SART algorithm from Scikit Image library.</em>
+  <em>Modified TV+SART algorithm produces mixed results depending on the image that was reconstructed. While having a higher SSIM score for both the unmodified Shepp-Logan phantom and cell data, the algorithm performs worse than the unmodified iradon_sart() function on noisy Shepp-Logan phantom data.</em>
 
   <li>FBP outperforms both iterative algorithms as projection number increases for the noisier data. It is very poor for extremely limited angle reconstruction.</li>
 </p>
