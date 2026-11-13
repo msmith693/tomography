@@ -128,7 +128,7 @@ When reconstructing square images, the reconstruction algorithms produce circula
 # Next Steps
 
 ## Deep learning
-From my research on this field, deep learning networks are being applied in various stages of the reconstruction process, with promising results. According to this paper <a href="#ref3">[3]</a>, deep learning has been used in end-to-end reconstruction, directly reconstructing the object volume from projection data. It has also been used in post-processing, where intermediate reconstructions are denoised and filtered. Another use is in general enhancing the use of traditional reconstruction techniques such as FBP or IR.
+From my research on this field, deep learning networks are being applied in various stages of the reconstruction process, with promising results. Deep learning has been used in end-to-end reconstruction<a href="#ref3">[3]</a>, directly reconstructing the object volume from projection data. It has also been used in post-processing, where intermediate reconstructions are denoised and filtered. Another use is in general enhancing the use of traditional reconstruction techniques such as FBP or IR.
 
 
 A secondary goal for this project was to develop a simple neural network that could be used to enhance traditional reconstructive algorithms. This would be trained on extensive data stored in open source libraries such as the [cell image library](http://www.cellimagelibrary.org/) and the sinograms produces by SVT on this data. The network would then be able to clean up sparse sinograms and aid in the reconstructive process. 
